@@ -28,12 +28,12 @@ class TestPush(unittest.TestCase):
 
         for _ in range(1000):
             order = collections.OrderedDict((c.name, random.uniform(*c.bounds)) for c in pas.m_channels)
-            effect = pas.execute(order)
+            effect = pas.execute(order)['feedback']
             self.assertEqual(effect['obj_x'], 350)
             self.assertTrue(effect['obj_y'] >= 5)
 
         order = collections.OrderedDict((('x', 310), ('y', 10), ('speed', 10)))
-        effect = pas.execute(order)
+        effect = pas.execute(order)['feedback']
         self.assertEqual(effect['obj_y'], 15)
 
     def test_pushangle(self):
@@ -52,23 +52,23 @@ class TestPush(unittest.TestCase):
             effect = pas.execute(order)
 
         order = collections.OrderedDict((('x', 350), ('y', 10), ('speed', 10)))
-        effect = pas.execute(order)
+        effect = pas.execute(order)['feedback']
         self.assertEqual(effect['obj_x'], 350)
         self.assertEqual(effect['obj_y'], 15)
 
         order = collections.OrderedDict((('x', 345), ('y', 10), ('speed', 10)))
-        effect = pas.execute(order)
+        effect = pas.execute(order)['feedback']
         self.assertEqual(effect['obj_x'], 350 + 10*math.cos(math.atan2(5, 5)))
         self.assertEqual(effect['obj_y'], 5   + 10*math.cos(math.atan2(5, 5)))
 
         for _ in range(1000):
             order = collections.OrderedDict((('x', 350 + random.uniform(0, 50)), ('y', 10), ('speed', 10)))
-            effect = pas.execute(order)
+            effect = pas.execute(order)['feedback']
             self.assertTrue(effect['obj_x'] < 350)
             self.assertTrue(effect['obj_y'] > 5)
 
             order = collections.OrderedDict((('x', 350 - random.uniform(0, 50)), ('y', 10), ('speed', 10)))
-            effect = pas.execute(order)
+            effect = pas.execute(order)['feedback']
             self.assertTrue(effect['obj_x'] > 350)
             self.assertTrue(effect['obj_y'] > 5)
 

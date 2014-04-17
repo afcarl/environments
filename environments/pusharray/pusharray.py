@@ -17,7 +17,7 @@ defcfg._describe('obj_y',     instanceof=numbers.Real)
 defcfg._freeze(True)
 
 
-class PushArrayStraight(explorers.envs.Environment):
+class PushArrayStraightCollides(explorers.envs.Environment):
 
     defcfg = defcfg
 
@@ -25,7 +25,8 @@ class PushArrayStraight(explorers.envs.Environment):
         self._cfg = cfg
         self._cfg._update(defcfg)
         self._cfg.s_channels = [explorers.envs.Channel('obj_x', (self._cfg.xmin, self._cfg.xmax)),
-                                explorers.envs.Channel('obj_y', (0, 100))]
+                                explorers.envs.Channel('obj_y', (0, 100)),
+                                explorers.envs.Channel('obj_col', (0, 100))]
         self._cfg.m_channels = [explorers.envs.Channel('x', (self._cfg.xmin, self._cfg.xmax)),
                                 explorers.envs.Channel('y', (0, 10)),
                                 explorers.envs.Channel('speed', (0, 10))]
@@ -43,9 +44,25 @@ class PushArrayStraight(explorers.envs.Environment):
             self._cfg['obj_y'] <= order['y']): # collision
             obj_x = self._cfg['obj_x']
             obj_y = self._cfg['obj_y'] + order['speed']
-            return collections.OrderedDict((('obj_x', obj_x), ('obj_y', obj_y)))
-        return collections.OrderedDict((('obj_x', self._cfg.obj_x), ('obj_y', self._cfg.obj_y)))
+            effect = collections.OrderedDict((('obj_x', obj_x), ('obj_y', obj_y), ('obj_col', 100)))
+        else:
+            effect = collections.OrderedDict((('obj_x', self._cfg.obj_x), ('obj_y', self._cfg.obj_y), ('obj_col', 0)))
+        return {'order': order, 'feedback': effect}
 
+    def close(self):
+        pass
+
+class PushArrayStraight(PushArrayStraightCollides):
+
+    def __init__(self, cfg):
+        super(PushArrayStraight, self).__init__(cfg)
+        self._cfg.s_channels = self._cfg.s_channels[:2]
+        self.s_channels = self.s_channels[:2]
+
+    def execute(self, order):
+        feedback = super(PushArrayStraight, self).execute(order)
+        feedback['feedback'].pop('obj_col')
+        return feedback
 
 class PushArrayAngle(PushArrayStraight):
 
@@ -56,6 +73,11 @@ class PushArrayAngle(PushArrayStraight):
             print
             obj_x = self._cfg['obj_x'] + math.sin(theta)*order['speed']
             obj_y = self._cfg['obj_y'] + math.cos(theta)*order['speed']
-            return collections.OrderedDict((('obj_x', obj_x), ('obj_y', obj_y)))
+            effect = collections.OrderedDict((('obj_x', obj_x), ('obj_y', obj_y)))
 
-        return collections.OrderedDict((('obj_x', self._cfg.obj_x), ('obj_y', self._cfg.obj_y)))
+        else:
+            effect = collections.OrderedDict((('obj_x', self._cfg.obj_x), ('obj_y', self._cfg.obj_y)))
+        return {'order': order, 'feedback': effect}
+
+    def close(self):
+        pass
