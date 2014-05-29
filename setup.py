@@ -2,7 +2,7 @@ import os
 from distutils.core import setup
 
 setup(
-    name = "enviroments",
+    name = "environments",
     version = "0.1",
     author = "Fabien Benureau",
     author_email = "fabien.benureau@inria.fr",
@@ -10,8 +10,8 @@ setup(
     license = "Open Science.",
     keywords = "exploration learning algorithm",
     url = "flowers.inria.fr",
-    packages=['environments', 'environments.pusharray'
+    packages=['environments', 'environments.envs',
              ],
-    requires=['explorers'],
+    requires=['forest'],
     classifiers=[],
 )
