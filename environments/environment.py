@@ -6,16 +6,20 @@ import forest
 
 class Channel(object):
 
-    def __init__(self, name, bounds=(float('-inf'), float('+inf')), fixed=None):
-        self.name = name
+    def __init__(self, name, bounds=(float('-inf'), float('+inf')),
+                 fixed=None, unit=''):
+        self.name   = name
         self.bounds = bounds
-        self.fixed = fixed
+        self.fixed  = fixed
+        self.unit   = unit
 
     def __repr__(self):
         return 'Channel({}, {})'.format(self.name, self.bounds)
 
     def __eq__(self, channel):
-        return self.name == channel.name and self.bounds == channel.bounds
+        return (self.name == channel.name and
+                self.bounds == channel.bounds and
+                self.fixed == channel.fixed)
 
 
 class OrderNotExecutableError(Exception):
@@ -38,6 +42,8 @@ class Environment(object):
         """ You should define m_channels and s_channels, motor and sensory
             channels for the environment, here, as a list of Channel instances.
         """
+        if isinstance(cfg, dict):
+            cfg = forest.Tree(cfg)
         self.cfg = cfg
         self.cfg._update(self.defcfg, overwrite=False)
 

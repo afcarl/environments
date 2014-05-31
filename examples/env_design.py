@@ -9,6 +9,10 @@
 
 # The `environments` module expose two classes: `Channel` and `Environment`.
 
+# <headingcell level=3>
+
+# Channels
+
 # <codecell>
 
 from environments import Channel, Environment
@@ -37,6 +41,10 @@ s_channels = [ch_a]
 # a sensory signal
 {'a': 15}
 
+# <headingcell level=3>
+
+# Environments
+
 # <markdowncell>
 
 # An `Environment` instance possesses two attributes, `m_channels` and `s_channels` describing its motor and sensory channels respectively, and a method `execute`, that receives a motor signal and returns environmental feedback. The environmental feedback contains the executed motor_signal, the resulting sensory signal, and an uuid - an unique identifier.
@@ -59,6 +67,7 @@ class Sum(Environment):
     
     def __init__(self, cfg):
         """Declare `m_channels` and `s_channels`"""
+        super(Sum, self).__init__(cfg)
         self.m_channels = [ch_x, ch_y]
         self.s_channels = [ch_a]
         
@@ -72,19 +81,34 @@ class Sum(Environment):
 
 # <codecell>
 
-sum_env = Sum()
+sum_env = Sum({})
 
 sum_env.execute({'x': 2, 'y': 11})
 
+# <headingcell level=3>
+
+# Details
+
 # <markdowncell>
 
-# ### TODO
-# * `meta` in `execute`
-# * `cfg`
-# * Environment class
-# * `close` and `try: ... finally:`
-# * environments without `s_channels`
+# #### `__init__()`'s `cfg` parameter
+# The ``__init__()`` method of an environment expects a `cfg` argument, which provides configuration parameters to the environment. If you call `Environment.__init__()`, it expects `cfg` to be a dictionnary or a `forest.Tree` instance. In the former case, it will be converted to a `forest.Tree` instance and set as the `self.cfg`.
+
+# <markdowncell>
+
+# #### `_execute`'s `meta` parameter
+# The `_execute` command accepts an additional argument, `meta`. If not `None`, it is assumed to be dictionnary, that can be both use for providing additional information on how to execute the command, or by the execution add logs and metadata about how the motor command was executed.
+
+# <markdowncell>
+
+# #### `close()` method
+# Any cleanup needed stopping the environement should be done in the `close()` method. The best way to create an environment and execute orders is to use a `try: ... finally:` construction, so that any error or exception still cleans-up open ports, connections, stops motors, etc.:
 
 # <codecell>
 
+try:
+    sum_env = Sum({})
+    sum_env.execute({'x': 2, 'y': 11})
+finally:
+    sum_env.close()
 
