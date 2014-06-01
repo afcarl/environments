@@ -3,6 +3,7 @@ import unittest
 import random
 
 import dotdot
+import environments
 from environments.envs import FirstSquare2D, SecondSquare2D
 from environments.envs import KinematicArm2D
 from environments.envs import VowelModel
@@ -40,6 +41,11 @@ class TestSquare2D(unittest.TestCase):
 
 
 class TestVowelModel(unittest.TestCase):
+
+    def test_create(self):
+        cfg = VowelModel.defcfg._copy()
+        cfg.classname = 'environments.envs.VowelModel'
+        vm = environments.Environment.create(cfg)
 
     def test_random(self):
         cfg = VowelModel.defcfg._copy()

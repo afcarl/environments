@@ -3,6 +3,7 @@ import abc
 import uuid
 import forest
 
+from . import tools
 
 class Channel(object):
 
@@ -37,6 +38,11 @@ class Environment(object):
     defcfg = defcfg
 
     OrderNotExecutableError = OrderNotExecutableError
+
+    @classmethod
+    def create(cls, cfg, **kwargs):
+        class_ = tools._load_class(cfg.classname)
+        return class_(cfg, **kwargs)
 
     def __init__(self, cfg, **kwargs):
         """ You should define m_channels and s_channels, motor and sensory

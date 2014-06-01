@@ -1,5 +1,13 @@
 import collections
 import random
+import importlib
+
+
+def _load_class(classname):
+    """Load a class from a string"""
+    module_name, class_name = classname.rsplit('.', 1)
+    module = importlib.import_module(module_name)
+    return getattr(module, class_name)
 
 def to_vector(signal, channels=None):
     """Convert a signal to a vector"""
