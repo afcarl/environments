@@ -18,7 +18,7 @@ The `environments` module expose two classes: `Channel` and `Environment`.
 ### Channels
 
 ```python
-    from environments import Channel, Environment
+from environments import Channel, Environment
 ```
 
 A `Channel` describes a scalar communication channel. It has a name, and,
@@ -61,10 +61,10 @@ resulting sensory signal, and an uuid - an unique identifier.
 ```
 
 
-To inherit from `Environment`, one only needs to overrides the method
-`_execute`, that is expected to receive a motor signal and return a sensory
-signal. This method is called by `Environment.execute`, that assign an uuid
-automatically to the feedback using the standart library `uuid` module. Let's
+To inherit from `Environment`, one only needs to override the method
+`_execute`, that expects to receive a motor signal and return a sensory
+signal. This method is called by `Environment.execute`, that automatically 
+assign an uuid to the feedback using the standart library `uuid` module. Let's
 create a simple environment.
 
 ```python
@@ -90,7 +90,7 @@ sum_env = Sum({})
 sum_env.execute({'x': 2, 'y': 11})
 ```
 
-Output :
+Output:
 ```
 {'m_signal': {'x': 2, 'y': 11},
  's_signal': {'a': 13},
