@@ -42,7 +42,7 @@ class VowelModel(Environment):
         """Initialization"""
         super(VowelModel, self).__init__(cfg)
         self.m_channels = [Channel('r', (0, 1)), Channel('h', (0, 1)), Channel('p', (0, 1))]
-        self.s_channels = [Channel('C_1'), Channel('C_2')]
+        self.s_channels = [Channel('C_1', (2, 8)), Channel('C_2', (7, 23))]
         # s_bounds ((2.4, 7.5), (7.4, 22.1))
 
     def __repr__(self):
