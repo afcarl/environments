@@ -26,7 +26,7 @@ class ConcatSPrimitive(SensoryPrimitive):
     """Return the concatened signal of multiple sensory primitives"""
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.s_prims = []
         self.s_channels = []
         self.s_names = set()
@@ -52,7 +52,7 @@ class PrimitiveEnvironment(Environment):
     def __init__(self, cfg):
         super(PrimitiveEnvironment, self).__init__(cfg)
 
-        self._create_primitives(self, cfg)
+        self._create_primitives(cfg)
 
     @property
     def m_channels(self):
@@ -69,7 +69,7 @@ class PrimitiveEnvironment(Environment):
 
     def _execute(self, m_signal, meta=None):
         m_command = self.m_prim.process_motor_signal(m_signal)
-        raw_sensors = self._execute_raw(m_signal, meta=None)
+        raw_sensors = self._execute_raw(m_command, meta=None)
         return self.s_prim.process_raw_sensors(raw_sensors)
 
     @abc.abstractmethod
