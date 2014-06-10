@@ -69,7 +69,7 @@ class PrimitiveEnvironment(Environment):
 
     def _execute(self, m_signal, meta=None):
         m_command = self.m_prim.process_motor_signal(m_signal)
-        raw_sensors = self._execute_raw(m_command, meta=None)
+        raw_sensors = self._execute_raw(m_command, meta=meta)
         return self.s_prim.process_raw_sensors(raw_sensors)
 
     @abc.abstractmethod

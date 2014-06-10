@@ -20,7 +20,7 @@ def to_vector(signal, channels=None):
 
 def to_signal(vector, channels):
     """Convert a vector to a signal"""
-    assert len(vector) == len(channels)
+    assert len(vector) == len(channels), "the lenght of the vector ({}) doesn't match the length of the channels ({})".format(len(vector), len(channels))
     return {c_i.name: v_i for c_i, v_i in zip(channels, vector)}
 
 def random_signal(channels, bounds=None):
