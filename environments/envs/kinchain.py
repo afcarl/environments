@@ -4,10 +4,9 @@ import math
 import random
 import collections
 
-import forest
-
 from .. import environment as env
 from .. import tools
+
 
 class RevJoint(object):
     """RevoluteJoint. Has one parent, and possibly several descendants"""
@@ -117,13 +116,6 @@ class MultiArm2D(object):
             bounds += self._bounds_spider(j)
         return bounds
 
-    def random_obs(self):
-        """Return a random observation"""
-        order = [random.uniform(lb, ub) for lb, ub in self.bounds]
-        obs = pandas.Series(order, range(-len(self.bounds), 0))
-        return obs.append(self.forward_kin(order))
-
-
 
 defcfg = env.Environment.defcfg._copy(deep=True)
 defcfg._isinstance('dim', int)
@@ -177,8 +169,6 @@ class KinematicArm2D(env.Environment):
         m_vector = tools.to_vector(m_signal, self.m_channels)
         s_vector = self._multiarm.forward_kin(m_vector)
         return tools.to_signal(s_vector, self.s_channels)
-
-        tuple(self._post_y(effect, order))
 
     def __repr__(self):
         return "KinematicArm2D(dim = {}, lengths = {}, limits = {})".format(
