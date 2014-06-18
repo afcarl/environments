@@ -1,10 +1,9 @@
 from __future__ import print_function, division, absolute_import
 import collections
 
-import forest
-
 from ..environment import Channel, Environment
 from .. import tools
+
 
 defcfg = Environment.defcfg._copy(deep=True)
 defcfg._describe('x_coo',  instanceof=collections.Iterable,
