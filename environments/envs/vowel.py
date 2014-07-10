@@ -36,7 +36,13 @@ from ..environment import Channel, Environment
 from .. import tools
 
 
+defcfg = Environment.defcfg._deepcopy()
+defcfg.classname = 'environments.envs.VowelModel'
+
+
 class VowelModel(Environment):
+
+    defcfg = defcfg
 
     def __init__(self, cfg, **kwargs):
         """Initialization"""

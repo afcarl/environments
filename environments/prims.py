@@ -68,6 +68,8 @@ class PrimitiveEnvironment(Environment):
         pass
 
     def _execute(self, m_signal, meta=None):
+        meta = {} if meta is None else meta
+        meta['m_signal'] = m_signal
         m_command = self.m_prim.process_motor_signal(m_signal)
         raw_sensors = self._execute_raw(m_command, meta=meta)
         return self.s_prim.process_raw_sensors(raw_sensors)

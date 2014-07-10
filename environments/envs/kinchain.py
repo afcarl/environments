@@ -1,6 +1,7 @@
 from __future__ import absolute_import, print_function, division
 
 import math
+import sys
 import random
 import collections
 
@@ -118,15 +119,16 @@ class MultiArm2D(object):
 
 
 defcfg = env.Environment.defcfg._copy(deep=True)
-defcfg._isinstance('dim', int)
-defcfg.dim = 6
-defcfg._isinstance('limits', collections.Iterable)
-defcfg.limits  = (-150, 150)
-defcfg._isinstance('lengths', (float, collections.Iterable))
-defcfg.lengths = 1.0
+defcfg._describe('dim', instanceof=int, default=6)
+defcfg._describe('limits', instanceof=collections.Iterable, default=(-150, 150))
+defcfg._describe('lengths', instanceof=(float, collections.Iterable), default=1.0)
+defcfg.classname = 'environments.envs.KinematicArm2D'
+
 
 class KinematicArm2D(env.Environment):
     """Interface for the kinematics of an arm"""
+
+    defcfg = defcfg
 
     def __init__(self, cfg):
         """\
@@ -138,6 +140,8 @@ class KinematicArm2D(env.Environment):
         super(KinematicArm2D, self).__init__(cfg)
 
         self.dim      = self.cfg.dim
+        sys.setrecursionlimit(10000)#self.dim+1)
+
         self._init_robot(self.cfg.lengths, self.cfg.limits)
 
         self.m_channels = [env.Channel('j{}'.format(i), bounds=b_i) for i, b_i in enumerate(self.limits)]
@@ -168,6 +172,7 @@ class KinematicArm2D(env.Environment):
     def _execute(self, m_signal, meta=None):
         m_vector = tools.to_vector(m_signal, self.m_channels)
         s_vector = self._multiarm.forward_kin(m_vector)
+        s_vector = (s_vector[0], s_vector[1])
         return tools.to_signal(s_vector, self.s_channels)
 
     def __repr__(self):
