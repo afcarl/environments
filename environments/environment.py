@@ -53,9 +53,21 @@ class Environment(object):
         self.cfg = cfg
         self.cfg._update(self.defcfg, overwrite=False)
 
+    # @abc.abstractmethod
+    # def transmit(self, m_signal, meta_in=None, meta_out=None):
+    #     """ Transmit a motor signal to the environment, and return a sensory signal.
+
+    #         :param m_signal:  the motor signal to transmit. Should be compatible with `m_channels`.
+    #         :param meta_in:   an optional dictionary with additional data that affect the environment.
+    #         :param meta_out:  an optional dictionary with additional data about the treatment of
+    #                           the motor signal by the environment.
+
+    #     """
+    #     pass
+
     def execute(self, m_signal, meta=None):
-        return {'m_signal': m_signal,
-                's_signal': self._execute(m_signal, meta=meta),
+        """Transmit a motor signal to the environment, and return feedback."""
+        return {'s_signal': self._execute(m_signal, meta=meta),
                 'uuid'    : uuid.uuid4()}
 
     @abc.abstractmethod
