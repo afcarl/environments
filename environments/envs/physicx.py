@@ -10,7 +10,7 @@ class Ball(object):
     def __init__(self, dt, radius, mass, pos, init_vel=(0.0, 0.0), friction=0.0, static=False):
         self.radius    = radius
         self.mass      = mass
-        self.friction  = friction
+        self.friction  = friction*dt
         self.static    = static
         self.dt        = dt
 
@@ -50,7 +50,7 @@ class World(object):
 
         for ball in self.objects:
             if not ball.updated:
-                ball.positions.append(ball.pos + ball.step_vel)
+                ball.positions.append(ball.pos + max(0.0, 1.0-ball.friction)*ball.step_vel)
                 ball.updated = True
 
     def add(self, *args):

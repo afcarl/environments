@@ -4,13 +4,13 @@ import sys
 import dotdot
 from environments.envs import physicx
 
-# pygame.init()
-# screen = pygame.display.set_mode((640,480))
+pygame.init()
+screen = pygame.display.set_mode((600,600))
 
-dt = 0.05
+dt = 0.01
 w = physicx.World(dt=dt)
-b1 = physicx.Ball(dt, 10.0, 1.0, (100.0, 105.0),  (50.0, 0.0))
-b2 = physicx.Ball(dt, 10.0, 1.0, (130.0, 100.0),  (0.0, 0.0))
+b1 = physicx.Ball(dt, 10.0, 1.0, (200.0, 305.0),  (5.0, 0.0), friction=0.00)
+b2 = physicx.Ball(dt, 10.0, 1.0, (230.0, 300.0),  (0.0, 0.0), friction=0.05)
 w.add(b1, b2)
 
 def draw_pygame(world):
@@ -21,6 +21,6 @@ def draw_pygame(world):
 
 for t in range(100000):
     w.step()
-    # print(b1.pos)
-    # draw_pygame(w)
+    if t % 100 == 0:
+        draw_pygame(w)
 
