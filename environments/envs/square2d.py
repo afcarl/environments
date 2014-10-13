@@ -1,20 +1,16 @@
 from __future__ import print_function, division, absolute_import
 import collections
 
-import forest
-
 from ..environment import Channel, Environment
 from .. import tools
 
+
 defcfg = Environment.defcfg._copy(deep=True)
-defcfg._describe('x_coo',  instanceof=collections.Iterable,
+defcfg._describe('x_coo',  instanceof=collections.Iterable, default=(0.5, 1.0),
                  docstring='coordinates of the cube along the x axis')
-defcfg.xcoo = (0.5, 1.0)
-defcfg._describe('y_coo',  instanceof=collections.Iterable,
+defcfg._describe('y_coo',  instanceof=collections.Iterable, default=(0.5, 1.0),
                  docstring='coordinates of the cube along the y axis')
-
-defcfg.ycoo = (0.5, 1.0)
-
+defcfg.classname = 'environments.envs.FirstSquare2D'
 
 class FirstSquare2D(Environment):
 
@@ -40,7 +36,12 @@ class FirstSquare2D(Environment):
         return tools.to_signal(s_vector, self.s_channels)
 
 
+defcfg2 = defcfg._deepcopy()
+defcfg2.classname = 'environments.envs.SecondSquare2D'
+
 class SecondSquare2D(FirstSquare2D):
+
+    defcfg = defcfg2
 
     def _transform(self, c, d):
         return (1/(10*c + d), (c**2)*d)
