@@ -59,8 +59,8 @@ class PushArrayStraight(PushArrayStraightCollides):
         self.cfg.s_channels = self.cfg.s_channels[:2]
         self.s_channels = self.s_channels[:2]
 
-    def _execute(self, m_signal):
-        s_signal = super(PushArrayStraight, self).execute(m_signal)
+    def _execute(self, m_signal, meta=None):
+        s_signal = super(PushArrayStraight, self)._execute(m_signal)
         s_signal.pop('obj_col')
         return s_signal
 
@@ -73,7 +73,7 @@ defcfg3._freeze(True)
 
 class PushArrayAngle(PushArrayStraight):
 
-    def _execute(self, m_signal):
+    def _execute(self, m_signal, meta=None):
         if (self._obj_xmin <= m_signal['x'] <= self._obj_xmax and
             self.cfg['obj_y'] <= m_signal['y']): # collision
             theta = math.atan2(self.cfg['obj_x'] - m_signal['x'], self.cfg['obj_y'])
