@@ -11,6 +11,8 @@ This software is placed under the [OpenScience license](http://fabien.benureau.c
 
 ## Requirements
 
+* **Required**: The [`forest`](https://github.com/flowersteam/forest).
+* **Recommended**: The [`numpy`](http://www.numpy.org/) package for some environments.
 * **Optional**: [`numpy`](http://numpy.org) for some environments, the [`bokeh`](http://bokeh.pydata.org/) plotting library for some examples, and the [`pygame`](http://www.pygame.org/) library for some optional visualization.
 
 ## Design Overview

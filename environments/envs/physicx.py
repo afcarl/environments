@@ -84,10 +84,6 @@ class World(object):
         """Return true if colliding with another ball"""
         norm = (ball1.positions[-1] - ball2.positions[-1])**2
         norm = norm[0]+norm[1]
-        print(ball1.pos)
-        print(ball1.name)
-        print(ball2.pos)
-        print(ball2.name)
         return not(ball1.static and ball2.static) and norm < (ball1.radius + ball2.radius)**2
 
     def resolve_collision(self, ball1, ball2):
@@ -101,7 +97,6 @@ class World(object):
 
         d12 = 2/(ball1.mass + ball2.mass)*np.dot(v1-v2, u12)/u12_normsq*u12
 
-        print('collision')
         if not ball1.static:
             ball1.positions.append(ball1.positions[-1] + self.dt*(v1 - ball1.mass*d12))
             ball1.updated = True

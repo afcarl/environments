@@ -1,3 +1,4 @@
+examples/*.html
 ark_reuse.py
 *.graffle
 .DS_Store

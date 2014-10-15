@@ -9,9 +9,10 @@ screen = pygame.display.set_mode((600,600))
 
 dt = 0.01
 w = physicx.World(dt=dt)
-b1 = physicx.Ball(dt, 10.0, 1.0, (200.0, 305.0),  (5.0, 0.0), friction=0.00)
-b2 = physicx.Ball(dt, 10.0, 1.0, (230.0, 300.0),  (0.0, 0.0), friction=0.05)
-w.add(b1, b2)
+b1 = physicx.Ball(dt, 10.0, 1.0, (200.0, 305.0), init_vel=(2.0, 0.0), friction=0.00)
+b2 = physicx.Ball(dt, 10.0, 1.0, (300.0, 300.0), init_vel=(0.0, 0.0), friction=0.00)
+w.add(b1)
+w.add(b2)
 
 def draw_pygame(world):
     screen.fill((255, 255, 255))
