@@ -18,7 +18,6 @@ setup(
         "https://github.com/flowersteam/forest/tarball/master#egg=forest-1.0",
     ],
     requires=['forest', 'numpy'],
-    classifiers=[],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Programming Language :: Python :: 2.7',
