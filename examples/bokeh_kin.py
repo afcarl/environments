@@ -66,6 +66,7 @@ if __name__ == '__main__':
     # Arm with decreasing lenghts segments
     cfg2 = cfg._deepcopy()
     cfg2.lengths = np.array([0.9**i for i in range(cfg2.dim)])
+    #cfg2.lengths = np.array([random.random() for i in range(cfg2.dim)])
     cfg2.lengths = cfg2.lengths/sum(cfg2.lengths)
     kin_env2 = Environment.create(cfg2)
 
@@ -81,5 +82,10 @@ if __name__ == '__main__':
         plotting.hold(True)
         bokeh_kin(kin_env2, m_signal, color='#91C46C', alpha=0.2 + i*0.15)
         plotting.hold(True)
+
+    plotting.xaxis().minor_tick_line_color = None
+    plotting.xaxis().major_tick_in = 0
+    plotting.yaxis().minor_tick_line_color = None
+    plotting.yaxis().major_tick_in = 0
 
     plotting.show()
