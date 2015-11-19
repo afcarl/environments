@@ -122,7 +122,7 @@ class MultiArm2D(object):
         return bounds
 
 
-defcfg = env.Environment.defcfg._copy(deep=True)
+defcfg = env.Environment.defcfg._deepcopy()
 defcfg._describe('dim', instanceof=int, default=6)
 defcfg._describe('limits', instanceof=collections.Iterable, default=(-150, 150))
 defcfg._describe('lengths', instanceof=(float, collections.Iterable), default=1.0)
@@ -246,4 +246,3 @@ class KinArmSynergies2D(KinematicArm2D):
                                 s_signal['y{}'.format(self.dim)]), self.s_channels)
 
         # return super(KinArmSynergies2D, self)._execute(m_signal2)
-

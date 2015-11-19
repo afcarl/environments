@@ -92,7 +92,7 @@ sum_env.execute({'x': 2, 'y': 11})
 # <markdowncell>
 
 # #### `__init__()`'s `cfg` parameter
-# The ``__init__()`` method of an environment expects a `cfg` argument, which provides configuration parameters to the environment. If you call `Environment.__init__()`, it expects `cfg` to be a dictionnary or a `forest.Tree` instance. In the former case, it will be converted to a `forest.Tree` instance and set as the `self.cfg`.
+# The ``__init__()`` method of an environment expects a `cfg` argument, which provides configuration parameters to the environment. If you call `Environment.__init__()`, it expects `cfg` to be a dictionnary or a `scicfg.SciConfig` instance. In the former case, it will be converted to a `scicfg.SciConfig` instance and set as the `self.cfg`.
 
 # <markdowncell>
 

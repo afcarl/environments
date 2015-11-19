@@ -11,7 +11,7 @@ This software is placed under the [OpenScience license](http://fabien.benureau.c
 
 ## Requirements
 
-* **Required**: The [`forest`](https://github.com/flowersteam/forest).
+* **Required**: The [`scicfg`](https://github.com/flowersteam/scicfg).
 * **Recommended**: The [`numpy`](http://www.numpy.org/) package for some environments.
 * **Optional**: [`numpy`](http://numpy.org) for some environments, the [`bokeh`](http://bokeh.pydata.org/) plotting library for some examples, and the [`pygame`](http://www.pygame.org/) library for some optional visualization.
 
@@ -109,8 +109,8 @@ Output:
 The ``__init__()`` method of an environment expects a `cfg` argument, which
 provides configuration parameters to the environment. If you call
 `Environment.__init__()`, it expects `cfg` to be a dictionnary or a
-`forest.Tree` instance. In the former case, it will be converted to a
-`forest.Tree` instance and set as the `self.cfg`.
+`scicfg.SciConfig` instance. In the former case, it will be converted to a
+`scicfg.SciConfig` instance and set as the `self.cfg`.
 
 #### `_execute`'s `meta` parameter
 The `_execute` command accepts an additional argument, `meta`. If not `None`, it

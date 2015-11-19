@@ -5,7 +5,7 @@ import math
 from ..environment import Channel, Environment
 
 
-defcfg = Environment.defcfg._copy(deep=True)
+defcfg = Environment.defcfg._deepcopy()
 defcfg._describe('xmin',      instanceof=numbers.Real)
 defcfg._describe('xmax',      instanceof=numbers.Real)
 defcfg._describe('obj_x',     instanceof=numbers.Real)

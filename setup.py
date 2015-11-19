@@ -3,9 +3,11 @@ from setuptools import setup
 
 import versioneer
 
+VERSION = '1.0.1'
+
 setup(
     name         = 'environments',
-    version      = '1.0',
+    version      = VERSION,
     cmdclass     = versioneer.get_cmdclass(),
     author       = 'Fabien Benureau',
     author_email = 'fabien.benureau@inria.fr',
@@ -14,15 +16,12 @@ setup(
     description  = 'Blackbox environment interface and implementations for autonomous exploration of sensorimotor spaces',
     license      = 'Open Science License (see fabien.benureau.com/openscience.html)',
     keywords     = 'exploration algorithm blackbox',
-    download_url = 'https://github.com/humm/environments/tarball/1.0',
+    download_url = 'https://github.com/humm/environments/tarball/{}'.format(VERSION),
     packages     = ['environments',
                     'environments.envs',
                     'environments.mprims',
                    ],
-    requires     = ['forest', 'numpy'],
-    dependency_links=[
-        "https://github.com/flowersteam/forest/tarball/master#egg=forest-1.0",
-    ],
+    requires     = ['scicfg', 'numpy'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Programming Language :: Python :: 2.7',

@@ -9,7 +9,7 @@ import collections
 
 import numpy as np
 
-import forest
+import scicfg
 
 from . import dmp
 
@@ -25,7 +25,7 @@ def create_mprim(cfg):
     motor_prim = motor_class(cfg)
     return motor_prim
 
-_defcfg = forest.Tree(strict=True)
+_defcfg = scicfg.SciConfig(strict=True)
 _defcfg._branch('mprims')
 _defcfg._describe('mprims.name', instanceof=str, default='dmp_sharedwidth')
 _defcfg._describe('mprims.dt', instanceof=numbers.Real, default=0.010)
@@ -123,7 +123,7 @@ mprims['dmp_sharedwidth'] = DmpSharedWidth
 
 
 
-ms_cfg = forest.Tree()
+ms_cfg = scicfg.SciConfig()
 ms_cfg._branch('mprims')
 ms_cfg._describe('mprims.name', instanceof=str, default='motorsteps')
 ms_cfg._describe('mprims.dim', instanceof=numbers.Integral)

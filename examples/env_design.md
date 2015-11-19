@@ -100,8 +100,8 @@ We can now execute motor commands on the environment.
 The ``__init__()`` method of an environment expects a `cfg` argument, which
 provides configuration parameters to the environment. If you call
 `Environment.__init__()`, it expects `cfg` to be a dictionnary or a
-`forest.Tree` instance. In the former case, it will be converted to a
-`forest.Tree` instance and set as the `self.cfg`.
+`scicfg.SciConfig` instance. In the former case, it will be converted to a
+`scicfg.SciConfig` instance and set as the `self.cfg`.
 
 #### `_execute`'s `meta` parameter
 The `_execute` command accepts an additional argument, `meta`. If not `None`, it

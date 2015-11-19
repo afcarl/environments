@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import abc
 import uuid
-import forest
+import scicfg
 
 from . import tools
 
@@ -27,7 +27,7 @@ class OrderNotExecutableError(Exception):
     pass
 
 
-defcfg = forest.Tree()
+defcfg = scicfg.SciConfig()
 defcfg._describe('classname', instanceof=str,
                  docstring='The name of the environment class. Only used with the create() class method.')
 
@@ -49,7 +49,7 @@ class Environment(object):
             channels for the environment, here, as a list of Channel instances.
         """
         if isinstance(cfg, dict):
-            cfg = forest.Tree(cfg)
+            cfg = scicfg.SciConfig(cfg)
         self.cfg = cfg
         self.cfg._update(self.defcfg, overwrite=False)
 

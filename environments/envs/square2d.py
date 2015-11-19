@@ -5,7 +5,7 @@ from ..environment import Channel, Environment
 from .. import tools
 
 
-defcfg = Environment.defcfg._copy(deep=True)
+defcfg = Environment.defcfg._deepcopy()
 defcfg._describe('x_coo',  instanceof=collections.Iterable, default=(0.5, 1.0),
                  docstring='coordinates of the cube along the x axis')
 defcfg._describe('y_coo',  instanceof=collections.Iterable, default=(0.5, 1.0),

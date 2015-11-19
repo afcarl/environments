@@ -8,7 +8,7 @@ try:
 except ImportError:
     pass
 
-import forest
+import scicfg
 
 from .. import MotorPrimitive, SensoryPrimitive, PrimitiveEnvironment, Channel
 from .. import tools
@@ -18,14 +18,14 @@ from .. import mprims
 from .kinchain import KinematicArm2D
 from . import physicx
 
-_objcfg = forest.Tree()
+_objcfg = scicfg.SciConfig()
 _objcfg._describe('radius', instanceof=numbers.Real)
 _objcfg._describe('mass', instanceof=numbers.Real)
 _objcfg._describe('pos', instanceof=collections.Iterable)
 _objcfg._describe('track', instanceof=bool)
 
 
-_sp_cfg = forest.Tree()
+_sp_cfg = scicfg.SciConfig()
 _sp_cfg._describe('x_limits', instanceof=collections.Iterable, default=(-1000, 1000))
 _sp_cfg._describe('y_limits', instanceof=collections.Iterable, default=(-1000, 1000))
 
@@ -40,7 +40,7 @@ class Displacement(SensoryPrimitive):
         return tools.to_signal(s_vector, self.s_channels)
 
 
-_defcfg = KinematicArm2D.defcfg._copy(deep=True)
+_defcfg = KinematicArm2D.defcfg._deepcopy()
 _defcfg.classname = 'environments.envs.KinScene2D'
 
 _defcfg._describe('headless', instanceof=bool, default=False)
