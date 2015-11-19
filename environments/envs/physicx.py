@@ -4,9 +4,11 @@ import collections
 
 import numpy as np
 try:
+    from pygame import Color
     import pygame.gfxdraw
 except ImportError:
-    pass
+    def Color(*args):
+        return args
 
 class Ball(object):
 
@@ -21,6 +23,7 @@ class Ball(object):
         self.updated   = True
 
         self.name      = ''
+
         self.color     = color
 
     @property
@@ -36,7 +39,9 @@ class Ball(object):
         return self.positions[-1]-self.positions[-2]
 
     def pygame_draw(self, screen):
+        pygame.gfxdraw.filled_circle(screen, int(self.pos[0]), int(self.pos[1]), int(self.radius), self.color)
         pygame.gfxdraw.aacircle(screen, int(self.pos[0]), int(self.pos[1]), int(self.radius), self.color)
+
 
 class Segment(object):
 
@@ -52,9 +57,10 @@ class Segment(object):
 
 class World(object):
 
-    def __init__(self, dt=1.0):
-        self.dt = dt
-        self.date = 0
+    def __init__(self, dt=1.0, limits=((-1000, 1000), (-1000, 1000))):
+        self.dt          = dt
+        self.date        = 0
+        self.limits      = limits
         self.objects     = []
         self.collidables = []
         self.collisions  = []
@@ -73,6 +79,21 @@ class World(object):
             if not ball.updated:
                 ball.positions.append(ball.pos + max(0.0, 1.0-ball.friction)*ball.step_vel)
                 ball.updated = True
+
+        self.check_limits()
+
+    def clip_pos(self, pos):
+        return (max(self.limits[0][0], min(self.limits[0][1], pos[0])),
+                max(self.limits[1][0], min(self.limits[1][1], pos[1])))
+
+    def check_limits(self):
+        for ball in self.collidables:
+            if not ball.static:
+                clipped_pos = self.clip_pos(ball.pos)
+                if clipped_pos[0] != ball.pos[0] or clipped_pos[1] != ball.pos[1]:
+                    ball.static=True
+                    ball.positions.append(np.array(clipped_pos))
+                    ball.positions.append(np.array(clipped_pos))
 
     def add(self, obj, passive=False):
         self.objects.append(obj)
@@ -98,10 +119,10 @@ class World(object):
         d12 = 2/(ball1.mass + ball2.mass)*np.dot(v1-v2, u12)/u12_normsq*u12
 
         if not ball1.static:
-            ball1.positions.append(ball1.positions[-1] + self.dt*(v1 - ball1.mass*d12))
+            ball1.positions.append(ball1.positions[-1] + self.dt*(v1 - ball2.mass*d12))
             ball1.updated = True
         if not ball2.static:
-            ball2.positions.append(ball2.positions[-1] + self.dt*(v2 + ball2.mass*d12))
+            ball2.positions.append(ball2.positions[-1] + self.dt*(v2 + ball1.mass*d12))
             ball2.updated = True
 
         self.collisions.append((self.date, (ball2.positions[-2] - ball1.positions[-2])*ball1.radius + ball1.positions[-2]))
