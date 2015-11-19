@@ -177,9 +177,11 @@ class KinematicArm2D(env.Environment):
             feats = ('x{}'.format(i+1), 'y{}'.format(i+1), None)
             j = self._multiarm.add_joint(j, RevJoint(length = self.lengths[i], limits = self.limits[i], orientation = 0.0, feats = feats))
 
+    def flatten_synergies(self, m_signal):
+        return tools.to_vector(m_signal, self.m_channels)
 
     def _execute(self, m_signal, meta=None):
-        m_vector = tools.to_vector(m_signal, self.m_channels)
+        m_vector = self.flatten_synergies(m_signal)
         s_signal = self._multiarm.forward_kin(m_vector)
         if self.cfg.collision_fail and self._collision(s_signal):
             raise self.OrderNotExecutableError('Collision detected in 2D arm')
@@ -216,7 +218,7 @@ class KinArmSynergies2D(KinematicArm2D):
         for i in range(0, self.dim, self.cfg.syn_res):
             self.m_channels.append(env.Channel('s{}'.format(i), bounds=(0.0, 1.0)))
 
-    def _execute(self, m_signal, meta=None):
+    def flatten_synergies(self, m_signal):
         m_signal2 = {'j{}'.format(i): m_signal['j{}'.format(i)] for i in range(self.dim)}
         weights = {'j{}'.format(i): 1.0 for i in range(self.dim)}
         for i in range(0, self.dim, self.cfg.syn_res):
@@ -232,7 +234,11 @@ class KinArmSynergies2D(KinematicArm2D):
             key = 'j{}'.format(j)
             m_signal2[key] /= weights[key]
 
-        m_vector = tools.to_vector(m_signal2, self.m_channels_kin)
+        return tools.to_vector(m_signal2, self.m_channels_kin)
+
+    def _execute(self, m_signal, meta=None):
+        m_vector = self.flatten_synergies(m_signal)
+
         s_signal = self._multiarm.forward_kin(m_vector)
         if self.cfg.collision_fail and self._collision(s_signal):
             raise self.OrderNotExecutableError('Collision detected in 2D arm')
