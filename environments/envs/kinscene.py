@@ -53,8 +53,7 @@ _defcfg._describe('tip.radius', instanceof=numbers.Real)
 _defcfg._branch('objects')
 _defcfg.objects._strict(False)
 
-_defcfg._branch('m_prims')
-# _defcfg.m_prims._update(_mp_cfg)
+_defcfg._branch('mprims')
 
 _defcfg._branch('s_prims')
 _defcfg.s_prims._update(_sp_cfg)
@@ -147,4 +146,3 @@ class KinScene2D(PrimitiveEnvironment):
         # apply sprim on tracked object
         raw_sensors = {'{}_pos'.format(obj_name): obj.positions for obj_name, obj in self.objects.items()}
         return raw_sensors
-

@@ -8,7 +8,7 @@ import numpy as np
 
 import dotdot
 from environments import Environment
-from environments.envs.kinscene import KinScene2D, MotorSteps
+from environments.mprims import MotorSteps
 
 random.seed(0)
 
@@ -19,11 +19,11 @@ class TestKinObj(unittest.TestCase):
 
     def test_motorsteps(self):
 
-        cfg = KinScene2D.defcfg._deepcopy()
-        cfg.dim                  = 4
-        cfg.limits               = (-20.0, 20.0)
-        cfg.m_prims.init_pos     = (3.0, 0.0, 0.0, -3.0)
-        cfg.m_prims.angular_step = 1.0
+        cfg = MotorSteps.defcfg._deepcopy()
+        cfg.mprims.dim          = 4
+        cfg.mprims.limits       = (-20.0, 20.0)
+        cfg.mprims.init_pos     = (3.0, 0.0, 0.0, -3.0)
+        cfg.mprims.angular_step = 1.0
 
         ms = MotorSteps(cfg)
 

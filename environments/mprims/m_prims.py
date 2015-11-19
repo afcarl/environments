@@ -123,33 +123,36 @@ mprims['dmp_sharedwidth'] = DmpSharedWidth
 
 
 
-_mp_cfg = forest.Tree()
-_mp_cfg._branch('mprims')
-_mp_cfg._describe('mprims.name', instanceof=str, default='motorsteps')
-_mp_cfg._describe('mprims.init_pos', instanceof=collections.Iterable)
-_mp_cfg._describe('mprims.steps', instanceof=numbers.Integral)
-_mp_cfg._describe('mprims.angular_step', instanceof=numbers.Real)
+ms_cfg = forest.Tree()
+ms_cfg._branch('mprims')
+ms_cfg._describe('mprims.name', instanceof=str, default='motorsteps')
+ms_cfg._describe('mprims.dim', instanceof=numbers.Integral)
+ms_cfg._describe('mprims.limits', instanceof=collections.Iterable)
+ms_cfg._describe('mprims.init_pos', instanceof=collections.Iterable)
+ms_cfg._describe('mprims.steps', instanceof=numbers.Integral)
+ms_cfg._describe('mprims.angular_step', instanceof=numbers.Real)
 
 class MotorSteps(MotorPrimitive):
 
-    defcfg = _mp_cfg
+    defcfg = ms_cfg
 
     def __init__(self, cfg):
-        self.cfg = cfg.mprims
+        cfg._update(self.defcfg, overwrite=False)
+        self.cfg = cfg
 
-        assert len(self.cfg.m_prims.init_pos) == self.cfg.dim
+        assert len(self.cfg.mprims.init_pos) == self.cfg.mprims.dim
 
-        limits = self.cfg.limits
+        limits = self.cfg.mprims.limits
         if not isinstance(limits[0], collections.Iterable):
-            limits = tuple(limits for _ in range(self.cfg.dim))
-        assert len(limits) == self.cfg.dim
+            limits = tuple(limits for _ in range(self.cfg.mprims.dim))
+        assert len(limits) == self.cfg.mprims.dim
         self.m_channels = [Channel('j{}'.format(i), bounds=limits[i]) for i, l_i in enumerate(limits)]
 
-        self.step = self.cfg.m_prims.angular_step
+        self.step = self.cfg.mprims.angular_step
 
     def process_motor_signal(self, m_signal):
         m_vector = np.array(tools.to_vector(m_signal, self.m_channels))
-        init_pos = np.array(self.cfg.m_prims.init_pos)
+        init_pos = np.array(self.cfg.mprims.init_pos)
         signs    = np.sign(m_vector-init_pos)
         step     = np.array([self.step]*len(init_pos))
         max_t    = int(max(np.abs(m_vector-init_pos))/self.step) + 1
