@@ -1,4 +1,3 @@
-import os
 from setuptools import setup
 
 import versioneer
@@ -21,7 +20,7 @@ setup(
                     'environments.envs',
                     'environments.mprims',
                    ],
-    requires     = ['scicfg', 'numpy'],
+    install_requires = ['scicfg', 'numpy'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Programming Language :: Python :: 2.7',
