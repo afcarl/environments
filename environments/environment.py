@@ -53,17 +53,9 @@ class Environment(object):
         self.cfg = cfg
         self.cfg._update(self.defcfg, overwrite=False)
 
-    # @abc.abstractmethod
-    # def transmit(self, m_signal, meta_in=None, meta_out=None):
-    #     """ Transmit a motor signal to the environment, and return a sensory signal.
-
-    #         :param m_signal:  the motor signal to transmit. Should be compatible with `m_channels`.
-    #         :param meta_in:   an optional dictionary with additional data that affect the environment.
-    #         :param meta_out:  an optional dictionary with additional data about the treatment of
-    #                           the motor signal by the environment.
-
-    #     """
-    #     pass
+    def info(self):
+        """Return info about the environment, useful for provenance tracking"""
+        return {}
 
     def execute(self, m_signal, meta=None):
         """Transmit a motor signal to the environment, and return feedback."""
@@ -90,7 +82,7 @@ class Environment(object):
         """Return relevant info on the environment.
 
         This is a good place to put any info that can be used to capture the provenance of the data,
-        such as, for instance, physic engine version number. 
+        such as, for instance, physic engine version number.
         """
         return {}
 
