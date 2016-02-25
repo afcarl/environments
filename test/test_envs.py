@@ -4,7 +4,7 @@ import random
 
 import dotdot
 import environments
-from environments.envs import FirstSquare2D, SecondSquare2D
+from environments.envs import FirstSquare2D
 from environments.envs import KinematicArm2D
 from environments.envs import VowelModel
 from environments import tools

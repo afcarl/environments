@@ -1,10 +1,5 @@
 from __future__ import division
 
-import numbers
-
-import numpy as np
-from bokeh import plotting, objects
-
 import dotdot
 from environments import Environment, tools
 from environments.envs import KinematicArm2D

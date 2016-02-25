@@ -4,8 +4,6 @@ import collections
 import random
 import math
 
-import numpy as np
-
 import dotdot
 from environments.envs.pusharray import PushArrayStraight
 from environments.envs.pusharray import PushArrayAngle

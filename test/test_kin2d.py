@@ -1,15 +1,12 @@
 from __future__ import print_function, division, absolute_import
 import unittest
-import collections
 import random
-import math
 
 import numpy as np
 
 import dotdot
 from environments import Environment
-from environments import tools
-from environments.envs import KinematicArm2D, KinArmSynergies2D
+from environments.envs import KinArmSynergies2D
 
 random.seed(0)
 

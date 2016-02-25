@@ -1,6 +1,5 @@
 from __future__ import print_function, division, absolute_import
 import unittest
-import random
 
 import dotdot
 from environments.envs.collision2d import Segment, segment_intersection

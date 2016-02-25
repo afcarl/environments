@@ -1,14 +1,10 @@
 from __future__ import print_function, division, absolute_import
 import unittest
-import collections
 import random
-import math
-
-import numpy as np
 
 import dotdot
-from environments import Environment
 from environments.mprims import MotorSteps
+
 
 random.seed(0)
 

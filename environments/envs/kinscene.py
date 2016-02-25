@@ -10,7 +10,7 @@ except ImportError:
 
 import scicfg
 
-from .. import MotorPrimitive, SensoryPrimitive, PrimitiveEnvironment, Channel
+from .. import SensoryPrimitive, PrimitiveEnvironment, Channel
 from .. import tools
 from .. import mprims
 

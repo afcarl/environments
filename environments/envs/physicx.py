@@ -4,11 +4,9 @@ import collections
 
 import numpy as np
 try:
-    from pygame import Color
     import pygame.gfxdraw
 except ImportError:
-    def Color(*args):
-        return args
+    pass
 
 class Ball(object):
 
