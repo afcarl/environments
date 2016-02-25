@@ -54,7 +54,12 @@ class Environment(object):
         self.cfg._update(self.defcfg, overwrite=False)
 
     def info(self):
-        """Return info about the environment, useful for provenance tracking"""
+        """Return relevant info on the environment.
+
+        This is a good place to put any info that can be used to capture
+        the provenance of the data, such as, for instance, the physic engine
+        version number.
+        """
         return {}
 
     def execute(self, m_signal, meta=None):
@@ -77,14 +82,6 @@ class Environment(object):
                 if not any(method in B.__dict__ for B in C.__mro__):
                     check = NotImplemented
         return check
-
-    def info(self):
-        """Return relevant info on the environment.
-
-        This is a good place to put any info that can be used to capture the provenance of the data,
-        such as, for instance, physic engine version number.
-        """
-        return {}
 
     def close(self):
         """Override for any clean-up"""
